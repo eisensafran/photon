@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Photon energy</title>
+  <link rel="stylesheet" href="styles.css" />
+ 
+  <script src="d3.js"></script>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+  <link rel="manifest" href="favicon/site.webmanifest">
+
+
+</head>
+<body>
+  <div class="container">
+    <div class="controls">
+      <label for="fileInput" class="file-input-label"><span class="svg-image"><img src="svg/image.svg" width="15" height="15"></span> Bild laden</label>
+      <input type="file" id="fileInput" accept="image/*" />
+
+      <button id="rotateBtn" disabled><span class="svg-image"><img src="svg/rotate.svg" width="15" height="15"></span>Bild drehen</button>
+
+      <button id="probeLineBtn" disabled>Messlinie setzen</button>
+
+      <button id="graph2Btn" disabled><span class="svg-image"><img src="svg/graph.svg" width="15" height="15"></span>Graph erstellen</button>
+      <button id="resetBtn"><span class="svg-image"><img src="svg/reset.svg" width="15" height="15"></span>Zurücksetzen</button>
+            <div class="checkbox-container">
+        <input type="checkbox" autocomplete="off" id="selectMode" />
+        <label for="selectMode">Pixel messen</label>
+      </div>
+    </div>
+
+    <div class="canvas-container">
+      <canvas id="imageCanvas"></canvas>
+    </div>
+
+    <div class="output-area">
+      <div class="coordinates-output" id="coordinatesOutput">
+      </div>
+    </div>
+
+    <div class="graph-container" id="graphContainer" style="display: none;">
+      <h3>Graph</h3>
+
+      <svg id="graphSvg" width="1000" height="600"></svg>
+      <button id="deleteLastMarkerBtn" class="btn-secondary">Letzten Marker löschen</button>
+      <fieldset class="transform-fieldset">
+        <legend>Eichfunktion</legend>
+        <p>E(x) = m &bullet; x + t </p>
+
+
+
+
+        <div id="graph2TransformControls" class="transform-controls" style="display: none;">
+            <label for="g2XScaleInput" class="inline-label">m:</label>
+            <input type="number" id="g2XScaleInput" step="0.01" value="1.00" autocomplete="off" />
+            <label for="g2XShiftInput" class="inline-label">t:</label>
+            <input type="number" id="g2XShiftInput" step="1" value="0" autocomplete="off" />
+            <button id="g2ApplyBtn" class="btn-secondary">Änderungen anwenden</button>
+        </div>
+        
+        <p class="transform-hint">
+          Hinweis: Änderungen werden auf das Koordinatensystems des Graphen angewendet. Gesetzte Marker werden gelöscht.
+        </p>
+
+                <details>
+          <summary><span><img src="svg/info.svg" width="12" height="12"></span> Hilfe</summary>
+          <div class="help">
+            m = <div class="frac">
+              <span>E(x<sub>2</sub>) - E(x<sub>1</sub>)</span>
+              <span class="symbol">/</span>
+              <span class="bottom">x<sub>2</sub> - x<sub>1</sub></span>
+            </div> 
+            <p>t = E(x<sub>1</sub>) - mx<sub>1</sub> mit x<sub>2</sub> &#62; x<sub>1</sub></p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span><img src="svg/switch.svg" width="12" height="12"></span> Umrechnung Wellenlänge &#8660; Energie</summary>
+          <div class="help">
+
+            <div id="lambdaConverter">
+                <div style="display: flex; gap: 5px; align-items: center; margin-bottom: 8px;">
+                  <label for="lambdaInput" class="inline-label">Wellenlänge in nm:</label>
+                    <input type="number" id="lambdaInput" step="any" style="width: 80px;" autocomplete="off"> &rarr; <span id="lambdaOutputResult"></span>
+                    
+                    <button id="lambdaCalcBtn" class="btn-secondary">Berechnen</button>
+                </div>
+                </div>
+
+            <div id="engergyConverter">
+                <div style="display: flex; gap: 5px; align-items: center; margin-bottom: 8px;">
+                  <label for="energyInput" class="inline-label">Energie in eV:</label>
+                    <input type="number" id="energyInput" step="any" style="width: 80px;" autocomplete="off"> &rarr; <span id="energyOutputResult"></span>
+                    
+                    <button id="energyCalcBtn" class="btn-secondary">Berechnen</button>
+                </div>
+              
+                
+            
+            </div>
+        </details>
+
+
+      </fieldset>
+    </div>
+
+    <footer>
+      <p class="footer-text">
+        Dieses Projekt wird derzeit als work in progress von Martin Blank und Dr. Andi Siess entwickelt.
+        (<a href="https://andi-siess.de/contact-imprint/" target="_blank">Impressum</a> &bull; <a href="https://andi-siess.de/project-lambda/" target="_blank">Weitere Infos</a>)
+      </p>
+    </footer>
+  </div>
+
+  <div id="rotationModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Bild drehen</h2>
+        <span class="close">&times;</span>
+      </div>
+
+      <div class="rotation-hint">
+        <img src="svg/info.svg" width="20" height="20">
+        <p>Drehe das Bild so, dass kleinere Energien auf der linken Seite liegen.<br>
+       <span style="color: red;">ROT</span> &rArr; links; <span style="color: blue;">BLAU</span> &rArr; rechts</p></div>
+            <div class="rotation-controls">
+        <label for="rotationInput" style="align-content: center;">Drehwinkel:</label>
+        <input type="number" id="rotationInput" min="-360" max="360" value="0" />
+      </div>
+      <div class="modal-buttons">
+        <button id="abortBtn">Abbrechen</button>
+        <button id="okBtn">OK</button>
+      </div>
+      <div class="modal-canvas-container">
+        <canvas id="modalCanvas"></canvas>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="tooltip" id="tooltip" style="display: none;"></div>
+
+  <script src="mainapp.js"></script>
+</body>
+</html>

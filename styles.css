@@ -1,0 +1,292 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.controls {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  margin-top: 3px;
+
+}
+
+.btn-secondary {
+  padding: 8px;
+  display: initial;
+}
+
+
+button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.file-input-label {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;  
+  display: inline-flex;
+  margin-top: 3px;
+}
+
+.file-input-label:hover {
+  background-color: #0056b3;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.canvas-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  background-color: black;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+#imageCanvas {
+  max-width: 70%;
+  height: auto;
+  background-color: black;
+}
+
+@media (max-width: 768px) {
+  #imageCanvas {
+    max-width: 100%;
+  }
+}
+
+.output-area {
+  background-color: white;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.coordinates-output {
+  font-family: monospace;
+  color: black;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.graph-container {
+  background-color: white;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+/* Transform controls */
+.transform-fieldset {
+  padding: 10px;
+  margin-top: 16px;
+  border: 1px solid #ddd;
+  color: #464646;
+  border-radius: 5px;
+}
+
+.transform-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.transform-controls input[type="number"] {
+  width: 90px;
+  font-family: monospace;
+}
+
+.inline-label {
+  min-width: 12px;
+  font-weight: 600;
+}
+
+.transform-hint {
+  font-size: 12px;
+  color: #777;
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90%;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: black;
+}
+
+.modal-canvas-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  background-color: black;
+  border-radius: 5px;
+}
+
+#modalCanvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.rotation-controls {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.rotation-controls input {
+  padding: 5px;
+  width: 80px;
+  text-align: center;
+}
+
+.rotation-hint {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: left;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tooltip {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 1001;
+}
+
+footer {
+  font-size: small;
+  color:#999999
+}
+
+.footer-text {
+  margin-top: 10px;
+}
+
+
+.frac {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    letter-spacing: 0.001em;
+    text-align: center;
+
+
+}
+.frac > span {
+    display: block;
+    padding: 0.1em;
+}
+.frac span.bottom {
+    border-top: thin solid black;
+}
+.frac span.symbol {
+    display: none;
+} 
+
+details {
+  padding: 5px;
+  background-color: #f0f0f0;;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.help {
+  padding-top: 15px;
+  padding-bottom: 10px;
+}
+
+.svg-image {
+  padding-right: 8px;
+}
