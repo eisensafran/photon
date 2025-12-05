@@ -14,5 +14,11 @@ Online tool to create intensity graphs from smartphone images for hands-on spect
 - csv export of the histogram data
 - image export of the histogram 
 
+### Known issues
+- the quickinfo overlay is also displayed when the cursor hovers over the histogram
+- the SVG icon for the button "Messline setzen" (draw probe line) is not displayed at the moment
+- the histogram is currently not responsive to narrow screens 
+- the icons in the `details`-section are too small/tiny
+
 ### Standalone app
 A standalone Electron-powered app is in very early alpha state [https://github.com/eisensafran/photon-electron](https://github.com/eisensafran/photon-electron). 

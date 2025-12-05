@@ -404,6 +404,8 @@ class ImageAnalysisTool {
   // ================================================
   
   // createGraph() REMOVED
+    // the follwing functions may still have a weird naming style ("drawGraph2") since there had been a "drawGraph1" function that was removed.
+  // todo: clean up naming style and all comments 
 
   createGraph2() {
     if (!this.image || this.probeLineY === null) return;
@@ -436,6 +438,7 @@ class ImageAnalysisTool {
   }
 
   // drawGraph() REMOVED
+
 
   drawGraph2(data) {
     this.graphSvg.selectAll("*").remove();
@@ -485,8 +488,7 @@ class ImageAnalysisTool {
     this.updateMarkers();
   }
 
-  // drawXAxis() REMOVED
-  
+
   drawG2XAxis() {
     const { bottomPadding, height: H, xScale, leftPadding, width: W, rightPadding } = this.graphBounds;
     this.xAxisContainer.selectAll("*").remove();
@@ -538,7 +540,7 @@ class ImageAnalysisTool {
     const scale = Number(this.g2XScaleInput.value);
     
     if (isNaN(shift) || isNaN(scale)) {
-        console.error("Invalid shift or scale value for Graph 2.");
+        console.error("Invalid shift or scale value."); // todo: this should be a modal for the user
         return;
     }
     this.g2AppliedShift = shift;
@@ -654,7 +656,7 @@ class ImageAnalysisTool {
 
     markerGroups.append("circle").attr("r", 5).attr("fill", "red");
     markerGroups.append("text")
-      .attr("x", 8).attr("y", -8)
+      .attr("x", 8).attr("y", -8) // todo: this snapping area should be customizable by the user (at least add a checkbox to disable snapping)
       .attr("font-size", "12px").attr("fill", "black")
       .text(d => `X: ${d.labelX.toFixed(2)}`); 
   }
